@@ -6,8 +6,9 @@ class UsersController < ApplicationController
   def create
   	@user = User.new(user_params)
 
-  	if @user.save#asdas
+  	if @user.save
   		flash[:success] = "Welcome to Sample App!!"
+      log_in(@user)
   		redirect_to  @user #user_path(@user)
   	else
   		render :new

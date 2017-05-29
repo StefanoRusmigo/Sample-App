@@ -25,6 +25,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end 
     follow_redirect!
     assert_template 'users/show'
+    assert is_logged_in?
     assert_not flash.empty?
     assert_select "div.alert-success","Welcome to Sample App!!" #this test is likely to fail in the future.  Testing only if flash exists is enough
   end
