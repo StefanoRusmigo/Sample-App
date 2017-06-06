@@ -47,7 +47,7 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
-    bootstrap-will_paginate (0.0.10)
+    bootstrap-will_paginate (1.0.0)
       will_paginate
     builder (3.2.3)
     carrierwave (0.11.2)
@@ -67,9 +67,9 @@ GEM
     concurrent-ruby (1.0.5)
     debug_inspector (0.0.3)
     erubis (2.7.0)
-    excon (0.55.0)
+    excon (0.56.0)
     execjs (2.7.0)
-    faker (1.6.6)
+    faker (1.7.3)
       i18n (~> 0.5)
     ffi (1.9.18-x86-mingw32)
     fission (0.5.0)
@@ -145,7 +145,7 @@ GEM
       multi_json (~> 1.10)
     fog-local (0.3.1)
       fog-core (~> 1.27)
-    fog-openstack (0.1.20)
+    fog-openstack (0.1.21)
       fog-core (>= 1.40)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
@@ -215,7 +215,7 @@ GEM
     guard-minitest (2.4.4)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
-    i18n (0.8.1)
+    i18n (0.8.4)
     inflecto (0.0.2)
     ipaddress (0.8.3)
     jbuilder (2.4.1)
@@ -342,7 +342,7 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
-    will_paginate (3.1.0)
+    will_paginate (3.1.5)
     xml-simple (1.1.5)
 
 PLATFORMS
@@ -351,11 +351,11 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (= 3.1.11)
   bootstrap-sass (= 3.3.6)
-  bootstrap-will_paginate (= 0.0.10)
+  bootstrap-will_paginate (= 1.0.0)
   byebug (= 9.0.0)
   carrierwave (= 0.11.2)
   coffee-rails (= 4.2.1)
-  faker (= 1.6.6)
+  faker (= 1.7.3)
   fog (= 1.38.0)
   guard (= 2.13.0)
   guard-minitest (= 2.4.4)
@@ -376,7 +376,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier (= 3.0.0)
   web-console (= 3.1.1)
-  will_paginate (= 3.1.0)
+  will_paginate (= 3.1.5)
 
 BUNDLED WITH
    1.14.4
