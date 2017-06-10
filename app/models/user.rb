@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-	attr_accessor :remember_token, :activation_token
+	attr_accessor :remember_token, :activation_token, :reset_token
 	before_save{email.downcase!} #self.email.downcase. Before_save can take a block or a method
   before_create :create_activation_digest
 
@@ -47,14 +47,31 @@ end
   	update_attribute(:remember_digest,nil)
   end
 
- def activate
-  update_columns(activated:true,activated_at: Time.zone.now)
+ # Activates an account.
+  def activate
+    update_attribute(:activated,    true)
+    update_attribute(:activated_at, Time.zone.now)
   end
 
+  # Sends activation email.
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
   end
 
+    # Sets the password reset attributes.
+    def create_reset_digest
+    self.reset_token = User.new_token
+
+     update_columns(reset_digest: User.digest(reset_token), reset_sent_at:Time.zone.now)
+    end
+
+    def send_password_reset_email
+      UserMailer.password_reset(self).deliver_now
+    end
+
+    def password_reset_exprire?
+      return true if self.reset_sent_at  < 2.hours.ago
+    end
 
 
   private
