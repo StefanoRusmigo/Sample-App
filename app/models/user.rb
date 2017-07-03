@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-	attr_accessor :remember_token, :activation_token, :reset_token
+	has_many :microposts, dependent: :destroy
+  attr_accessor :remember_token, :activation_token, :reset_token
 	before_save{email.downcase!} #self.email.downcase. Before_save can take a block or a method
   before_create :create_activation_digest
 
@@ -71,6 +72,10 @@ end
 
     def password_reset_exprire?
       return true if self.reset_sent_at  < 2.hours.ago
+    end
+
+    def feed
+      Micropost.where("user_id = ?", id)#code equivalent to microposts(self.microposts)
     end
 
 
