@@ -1,5 +1,15 @@
 class User < ApplicationRecord
 	has_many :microposts, dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship", 
+                                   foreign_key: :follower_id,
+                                   dependent:   :destroy
+  has_many :pasive_relationships, class_name: "Relationship", 
+                                   foreign_key: :followed_id,
+                                   dependent:   :destroy
+
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :pasive_relationships
+
   attr_accessor :remember_token, :activation_token, :reset_token
 	before_save{email.downcase!} #self.email.downcase. Before_save can take a block or a method
   before_create :create_activation_digest
@@ -74,9 +84,24 @@ end
       return true if self.reset_sent_at  < 2.hours.ago
     end
 
-    def feed
-      Micropost.where("user_id = ?", id)#code equivalent to microposts(self.microposts)
+    def follow(user)
+      self.following << user 
     end
+
+    def unfollow(user)
+      following.delete(user) # we can omit self because we are inside the model
+    end
+
+    def following?(user)
+      following.include?(user)
+    end
+
+    def feed
+      following_ids ="Select followed_id FROM Relationships 
+                      WHERE follower_id = :user_id"#This subselect arranges for all the set logic to be pushed into the database, which is more efficient than storing everything in rails memory
+      Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+    end
+
 
 
   private

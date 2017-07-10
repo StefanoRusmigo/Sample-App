@@ -1,9 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
   def setup
   	@user = User.new(name: "Example User", email: "user@example.com",password: "foobar",password_confirmation:"foobar")
   end
@@ -85,6 +83,35 @@ class UserTest < ActiveSupport::TestCase
         @user.destroy
       end
     end
+
+    test "follow another user" do 
+      user = users(:michael) 
+      other_user = users(:archer)
+      assert_not user.following?(other_user)
+      user.follow(other_user)
+      assert user.following?(other_user)
+      assert other_user.followers.include?(user)
+      user.unfollow(other_user)
+      assert_not user.following?(other_user)
+      end
+
+      test "feed has the right posts" do
+       michael = users(:michael)
+       archer  = users(:archer)
+       lana    = users(:lana)
+       #followed user
+       lana.microposts.each do |post|
+       assert michael.feed.include?(post)
+       end     
+       #not followed user
+        archer.microposts.each do |post|
+          assert_not michael.feed.include?(post)
+       end    
+       #posts from self  
+        michael.microposts.each do |post|
+          assert michael.feed.include?(post)
+       end
+      end
 
 
 end

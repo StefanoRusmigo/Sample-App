@@ -24,7 +24,7 @@ User.create!(name:  "Example User",
                activated: true,
                activated_at: Time.zone.now)
 end
-
+#microposts
 user = User.order(:created_at).take(6)
 
 50.times do 
@@ -33,3 +33,11 @@ user.each do |user|
   user.microposts.create!(content:content)
 end
 end
+
+#Following relationships
+users = User.all
+user = User.first
+following= users[2..50]
+followers = users[3..40]
+following.each {|followed| user.follow(followed)}
+followers.each {|follower| follower.follow(user)}

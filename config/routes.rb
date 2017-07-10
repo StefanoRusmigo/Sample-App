@@ -14,8 +14,14 @@ Rails.application.routes.draw do
   get  "/signup", to: 'users#new'
   post "/signup", to: 'users#create'
 
-  resources :users
+  resources :users do 
+    member do
+      get :followers,:following
+    end
+  end
+
   resources :account_activations, only:[:edit]
   resources :password_resets, only:[:edit,:new,:create,:update]
   resources :microposts, only:[:create,:destroy]
+  resources :relationships, only:[:create,:destroy]
 end 	
